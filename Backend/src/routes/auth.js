@@ -1,18 +1,18 @@
 const express = require("express");
-const {signUp,signIn,requireSignIn}=require("../controllers/auth")
+const { signUp, signIn } = require("../controllers/auth");
 
-// express-validator is used for the validation of the user 
-const {check}=require('express-validator')
+// express-validator is used for the validation of the user
+const {
+  validateSignUpRequest,
+  isRequestValidated,
+  validateSignInRequest,
+} = require("../validators/auth");
 
 const router = express.Router();
 
 // routing
+// once the request is validateRequest(middleware) ->request validate(middleware)-> signUp
+router.post("/signin", validateSignInRequest, isRequestValidated, signIn);
+router.post("/signup", validateSignUpRequest, isRequestValidated, signUp);
 
-router.post("/signin",signIn);
-router.post("/signup",signUp);
-router.post("/profile",requireSignIn,(req,res,next)=>{
-	res.status(200).json({
-		message:"Profile Page"
-	})
-})
 module.exports = router;

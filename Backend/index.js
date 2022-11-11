@@ -3,16 +3,16 @@ const app = express();
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 // routes
-const authRoutes = require("./routes/auth");
-const adminRoutes = require("./routes/admin/auth");
-
+const authRoutes = require("./src/routes/auth");
+const adminRoutes = require("./src/routes/admin/auth");
+const categoryRoutes = require("./src/routes/categories/category");
 // using .env
 dotenv.config();
 app.use(express.json());
 // middelware
 app.use("/api", authRoutes);
 app.use("/api", adminRoutes);
-
+app.use("/api", categoryRoutes);
 	// database connection
 	mongoose
 		.connect(
